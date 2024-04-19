@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 // get user
 // get users
-// insert user
-// delete user
 namespace givemore.Controllers
 {
     [ApiController]
@@ -51,22 +49,6 @@ namespace givemore.Controllers
             newUser.Password = "password";
 
             return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
-        {
-            // This is just a placeholder. In a real application, you would use the id to delete the user from your database.
-            bool userExists = true; // Change this to check if the user exists in your database.
-
-            if (!userExists)
-            {
-                return NotFound();
-            }
-
-            // Delete the user from your database here.
-
-            return NoContent();
         }
 
     }
