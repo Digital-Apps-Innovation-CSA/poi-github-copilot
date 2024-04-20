@@ -1,0 +1,47 @@
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+
+<div id="resourceList"></div>
+
+<script>
+// Your JavaScript code goes here
+//html list from const result
+//javascript get resources from resource group
+const { DefaultAzureCredential } = require("@azure/identity");
+const { ResourceManagementClient } = require("@azure/arm-resources");
+
+async function main() {
+  const credential = new DefaultAzureCredential();
+  const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
+  const client = new ResourceManagementClient(credential, subscriptionId);
+  const resourceGroupName = "rvrrgrouppipe";
+
+  console.log(`Listing all resources in resource group: ${resourceGroupName}`);
+  const result = await client.resources.listByResourceGroup(resourceGroupName);
+  console.log("Result:");
+  console.log(result);
+
+  // Get the div element
+  const listDiv = document.getElementById('resourceList');
+
+  // Create a ul element
+  const ul = document.createElement('ul');
+
+  // Create an li element for each item in the result array and append it to the ul
+  result.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item.name; // Replace 'item.name' with the property you want to display
+    ul.appendChild(li);
+  });
+
+  // Append the ul to the div
+  listDiv.appendChild(ul);
+}
+
+main().catch((err) => {
+  console.error("The sample encountered an error:", err);
+});
+</script>
+
+</body>
+</html>
